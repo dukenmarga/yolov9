@@ -97,6 +97,18 @@ AutoDL docker environment: https://github.com/WongKinYiu/yolov9/issues/112#issue
 </details>
 
 
+## Install dependencies
+
+This step below is needed if you want to modify existing code locally.
+It works on Python 3.13, but not on 3.14.
+To train custom model, it is strongly suggested to use Google Colab as it needs ~20GB VRAM GPU. 
+
+```
+python3.13 -m venv venv
+source venv/bin/activate
+pip3.13 install -r requirements.txt
+```
+
 ## Installation
 
 Docker environment (recommended)
