@@ -92,6 +92,7 @@ def run(
     # Run inference
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
     seen, windows, dt = 0, [], (Profile(), Profile(), Profile())
+    inference_data = []
     for path, im, im0s, vid_cap, s in dataset:
         with dt[0]:
             im = torch.from_numpy(im).to(model.device)
@@ -141,6 +142,10 @@ def run(
 
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
+                    # save to variable
+                    data = [names[int(cls)], conf.cpu().item(), torch.stack(xyxy).cpu().numpy()]
+                    inference_data.append(data)
+
                     if conf > conf_thres:
                         boxes = np.append(boxes, [torch.stack(xyxy).cpu().numpy()], axis=0)
                     if save_txt:  # Write to file
@@ -201,6 +206,7 @@ def run(
     if update:
         strip_optimizer(weights[0])  # update model (to fix SourceChangeWarning)
 
+    return inference_data
 
 def parse_opt():
     parser = argparse.ArgumentParser()
