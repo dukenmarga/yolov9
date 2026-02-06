@@ -143,11 +143,11 @@ def run(
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
 
                 # Write results
+                all_boxes = [] # contains collection of box and it data (label name, conf. value, box coordinates xyxy)
                 for *xyxy, conf, cls in reversed(det):
                     # save to variable
-                    data = [names[int(cls)], conf.cpu().item(), torch.stack(xyxy).cpu().numpy()]
-                    inference_data[filename] = data
-
+                    a_box = [names[int(cls)], conf.cpu().item(), torch.stack(xyxy).cpu().numpy()]
+                    all_boxes.append(a_box)
                     if conf > conf_thres:
                         boxes = np.append(boxes, [torch.stack(xyxy).cpu().numpy()], axis=0)
                     if save_txt:  # Write to file
@@ -162,6 +162,8 @@ def run(
                         annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
+
+            inference_data[filename] = all_boxes
 
             # Stream results
             im0 = annotator.result()
