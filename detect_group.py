@@ -133,6 +133,7 @@ def run(
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if save_crop else im0  # for save_crop
             annotator = Annotator(im0, line_width=line_thickness, example=str(names))
+            all_boxes = [] # contains collection of box and it data (label name, conf. value, box coordinates xyxy)
             if len(det):
                 # Rescale boxes from img_size to im0 size
                 det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()
@@ -143,7 +144,6 @@ def run(
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
 
                 # Write results
-                all_boxes = [] # contains collection of box and it data (label name, conf. value, box coordinates xyxy)
                 for *xyxy, conf, cls in reversed(det):
                     # save to variable
                     a_box = [names[int(cls)], conf.cpu().item(), torch.stack(xyxy).cpu().numpy()]
