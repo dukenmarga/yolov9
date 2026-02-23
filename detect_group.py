@@ -194,7 +194,10 @@ def run(
                         vid_writer[i] = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
                     vid_writer[i].write(im0)
 
-        grouped_save_path = save_path.replace('.jpg', '-grouped.jpg')
+        image_name = Path(save_path).stem
+        suffix = Path(save_path).suffix
+        image_name = f"{image_name}-grouped{suffix}"
+        grouped_save_path = Path(save_path).with_name(image_name)
         w, h = im0.shape[1], im0.shape[0]
         clusters = boxjoin.BoxClustering(boxes=boxes, img=im0s, save_path=grouped_save_path, w=w, h=h, offset=10, mode="xyxy")
 
