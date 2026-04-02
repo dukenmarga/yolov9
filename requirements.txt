@@ -3,8 +3,8 @@
 
 # Base ------------------------------------------------------------------------
 --extra-index-url https://download.pytorch.org/whl/cu128
-torch==2.10.0
-torchvision==0.25.0
+torch==2.10.0+cu128
+torchvision==0.25.0+cu128
 gitpython
 ipython
 matplotlib>=3.2.2
