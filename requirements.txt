@@ -2,9 +2,8 @@
 # Usage: pip install -r requirements.txt
 
 # Base ------------------------------------------------------------------------
---index-url https://download.pytorch.org/whl/cu128
-torch==2.10.0+cu128
-torchvision==0.25.0+cu128
+torch @ https://download.pytorch.org/whl/cu128/torch-2.10.0%2Bcu128-cp313-cp313-manylinux_2_28_x86_64.whl#sha256=7b4bd23ed63de97456fcc81c26fea9f02ee02ce1112111c4dac0d8cfe574b23e
+torchvision @ https://download-r2.pytorch.org/whl/cu128/torchvision-0.25.0%2Bcu128-cp313-cp313-manylinux_2_28_x86_64.whl#sha256=a9c0de893dce9c2913c9c7ae88a916910f92d02b99da149678806d18e8079f29
 gitpython
 ipython
 matplotlib>=3.2.2
